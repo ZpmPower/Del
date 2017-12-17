@@ -138,7 +138,10 @@ namespace DeliveryService
                 m.getTrunk().Clear();
             }
         }
-
+        public ILoader getLoader()
+        {
+            return loader_;
+        }
         public void setTransport(ILoader transport)
         {
             loader_ = transport;

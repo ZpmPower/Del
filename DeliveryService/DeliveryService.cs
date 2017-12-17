@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeliveryService
 {
-    class DeliveryService
+    public class DeliveryService
     {
         private static DeliveryService instance;
         Delivery delivery;
@@ -24,6 +24,10 @@ namespace DeliveryService
             if (instance == null)
                 instance = new DeliveryService(name,c, t, m);
             return instance;
+        }
+        public Delivery getDelivery()
+        {
+            return delivery;
         }
         public void showPark()
         {

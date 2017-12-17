@@ -7,7 +7,7 @@ namespace DeliveryService
     public class DeliveryServiceTest
     {
         [TestMethod]
-        public void boxWeight1()
+        public void boxWeight()
         {
             //arrange
             Box b5 = new Box();
@@ -54,6 +54,73 @@ namespace DeliveryService
             Delivery delivery = new Delivery(1, 2, 2);
             Tuple<int, int, int> allCount = delivery.getCountPark();
             int actual = allCount.Item1 + allCount.Item2 + allCount.Item3;
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void isUnique()
+        {
+            DeliveryService deliveryService;
+            deliveryService = DeliveryService.getInstance("MyService", 1, 2, 3);
+            string number1 = deliveryService.generateId();
+            string number2 = deliveryService.generateId();
+            Assert.AreNotEqual(number1, number2);
+        }
+        [TestMethod]
+        public void sendingCode()
+        {
+            Client c1 = new Client("Evgeniy", "Emelyanov", "Sergeevich", "+380963245576");
+            DeliveryService deliveryService;
+            deliveryService = DeliveryService.getInstance("MyService", 1, 2, 1);
+            string expected = deliveryService.generateId();
+            deliveryService.sendNumber(c1, expected);
+            Assert.AreEqual(expected, c1.getNumberAt(0));
+        }
+        [TestMethod]
+        public void choosingTrasport()
+        {
+            Box b5 = new Box();
+            Box b6 = new Box();
+            b5.addBox(b6);
+            Item i7 = new Item(100);
+            b5.addItem(i7);
+            Parcel p1 = new Parcel(b5);
+            Client c1 = new Client("Evgeniy", "Emelyanov", "Sergeevich", "+380963245576");
+            Client c2 = new Client("Alex", "Kukishev", "Alexeevich", "+380553245576");
+            Type expected = new Truck(500).GetType();
+            DeliveryService deliveryService;
+            deliveryService = DeliveryService.getInstance("MyService", 1, 2, 1);
+            deliveryService.sendParcel(c1, c2, p1);
+            Type actual = deliveryService.getDelivery().getLoader().GetType();
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void carWeightTest()
+        {
+            Box b5 = new Box();
+            Box b6 = new Box();
+            b5.addBox(b6);
+            Item i7 = new Item(100);
+            b5.addItem(i7);
+            Parcel p1 = new Parcel(b5);
+            Car car = new Car(250);
+            int expected = 100;
+            car.load(p1);
+            int actual = car.getCapacity().currentCapacity;
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void carTrunkTest()
+        {
+            Box b5 = new Box();
+            Box b6 = new Box();
+            b5.addBox(b6);
+            Item i7 = new Item(100);
+            b5.addItem(i7);
+            Parcel p1 = new Parcel(b5);
+            Car car = new Car(250);
+            car.load(p1);
+            int expected = 0;
+            int actual = car.getTrunk().IndexOf(p1);
             Assert.AreEqual(expected, actual);
         }
     }
