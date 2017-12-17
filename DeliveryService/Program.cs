@@ -34,6 +34,8 @@ namespace DeliveryService
 
             Parcel p1 = new Parcel(b1);
             Parcel p2 = new Parcel(b5);
+            Console.WriteLine(p1.getWeight());
+            Console.WriteLine(p2.getWeight());
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeliveryService
 {
-    class Item
+    public class Item
     {
         int weight_;
         public int Weight

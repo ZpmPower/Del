@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeliveryService
 {
-    class Box
+    public class Box
     {
         List<Item> items_ = new List<Item>() ;
         List<Box> boxes_ = new List<Box>();
@@ -25,6 +25,19 @@ namespace DeliveryService
         public void addBox(Box box)
         {
             boxes_.Add(box);
+        }
+        public int caclWeightBox(Box box)
+        {
+            int resWeight = 0;
+            foreach (Item i in box.getItems())
+            {
+                resWeight += i.Weight;
+            }
+            foreach (Box b in box.getBoxes())
+            {
+                resWeight += caclWeightBox(b);
+            }
+            return resWeight;
         }
     }
 }

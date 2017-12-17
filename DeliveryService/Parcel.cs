@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeliveryService
 {
-    class Parcel
+    public class Parcel
     {
         Box mainBox;
         int weight_;
@@ -18,7 +18,7 @@ namespace DeliveryService
             {
                 mainBox = box;
             }
-            //calcWeightParcel();
+            calcWeightParcel();
         }
         public void setNumber(string s)
         {
@@ -36,10 +36,10 @@ namespace DeliveryService
         {
             return weight_;
         }
-        //public void calcWeightParcel()
-        //{
-         //    weight_ = mainBox.caclWeightBox(mainBox);
-        //}
-        
+        public void calcWeightParcel()
+        {
+            weight_ = mainBox.caclWeightBox(mainBox);
+        }
+
     }
 }
