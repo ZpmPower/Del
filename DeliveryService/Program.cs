@@ -34,8 +34,22 @@ namespace DeliveryService
 
             Parcel p1 = new Parcel(b1);
             Parcel p2 = new Parcel(b5);
-            Console.WriteLine(p1.getWeight());
             Console.WriteLine(p2.getWeight());
+            DeliveryService deliveryService;
+            deliveryService = DeliveryService.getInstance("MyService", 3, 3, 3);
+            Console.WriteLine(deliveryService.Name);
+            //deliveryService.showPark();
+            Client c1 = new Client("Vadim", "Kalishuk", "Bogdanovich", "+380962345588");
+            Client c2 = new Client("Vladka", "Swit", "Alexseevich", "+380956745588");
+            deliveryService.sendParcel(c1, c2, p1);
+            deliveryService.sendParcel(c2, c1, p2);
+            deliveryService.showPark();
+            deliveryService.startDelivery();
+            deliveryService.showPark();
+            c2.showNumbers();
+            //Console.WriteLine(c2.info());
+            deliveryService.receiveParcel(c2, c2.getNumberAt(0));
+            deliveryService.receiveParcel(c1, c1.getNumberAt(0));
         }
     }
 }

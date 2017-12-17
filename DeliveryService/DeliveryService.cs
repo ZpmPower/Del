@@ -79,7 +79,7 @@ namespace DeliveryService
             s = s.Remove(9);
             s = s.Remove(0, 1);
             return s;
-
+            
         }
         public void sendNumber(Client client, string number)
         {
