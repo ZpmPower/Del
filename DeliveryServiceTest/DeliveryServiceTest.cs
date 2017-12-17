@@ -44,8 +44,17 @@ namespace DeliveryService
             Parcel p = new Parcel(b1);
             p.calcWeightParcel();
             int actual = p.getWeight();
-             //assert
-             Assert.AreEqual(expected, actual);
+            //assert
+            Assert.AreEqual(expected, actual);
+        }
+        [TestMethod]
+        public void parkCount()
+        {
+            int expected = 5;
+            Delivery delivery = new Delivery(1, 2, 2);
+            Tuple<int, int, int> allCount = delivery.getCountPark();
+            int actual = allCount.Item1 + allCount.Item2 + allCount.Item3;
+            Assert.AreEqual(expected, actual);
         }
     }
 }

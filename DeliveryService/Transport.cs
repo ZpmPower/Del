@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DeliveryService
 {
-    interface ILoader
+    public interface ILoader
     {
         void load(Parcel parcel);
     }
-    abstract class Transport : ILoader
+    public abstract class Transport : ILoader
     {
         protected Capacity capacity = new Capacity();
         protected List<Parcel> trunk = new List<Parcel>();
@@ -23,13 +23,19 @@ namespace DeliveryService
                 Console.WriteLine(String.Format("Current cap: {0}\nTotal cap: {1}", capacity.currentCapacity,capacity.totalCapacity));
             }
         }
+        public string show()
+        {
+            return this.GetType().ToString() + " " + "Current: " + capacity.currentCapacity + " " + "total: " + capacity.totalCapacity;
+        }
+        public Capacity getCapacity() { return capacity; }
+        public List<Parcel> getTrunk() { return trunk; }
     }
-    class Capacity
+    public class Capacity
     {
         public int totalCapacity { set; get; }
         public int currentCapacity { set; get; }
     }
-    class Car : Transport
+    public class Car : Transport
     {
         public Car(int cap)
         {
@@ -37,21 +43,21 @@ namespace DeliveryService
         }
         
     }
-    class Truck : Transport
+    public class Truck : Transport
     {
         public Truck(int c)
         {
             capacity.totalCapacity = c;
         }
     }
-    class Motocycle : Transport
+    public class Motocycle : Transport
     {
         public Motocycle(int c)
         {
             capacity.totalCapacity = c;
         }
     }
-    class Delivery
+    public class Delivery
     {
         private ILoader loader_;
         List<Car> cars;
@@ -79,7 +85,59 @@ namespace DeliveryService
         public List<Car> getCars() { return cars; }
         public List<Truck> getTrucks() { return trucks; }
         public List<Motocycle> getMotos() { return motos; }
-        
+        public Tuple<int,int,int> getCountPark()
+        {
+            return new Tuple<int, int, int>(cars.Count, trucks.Count, motos.Count);
+        }
+        public string getParcels(List<Parcel> parcels)
+        {
+            string result = "";
+            if (parcels.Count > 0)
+            {
+                foreach (Parcel p in parcels) result += p.getNumber() + " ";
+            }
+            return result;
+        }
+        public string showPark()
+        {
+            string result = "Cars:\n";
+            foreach (Car c in cars)
+            {
+                result += c.show() + " " + "Parcels: ";
+                result += getParcels(c.getTrunk()) + '\n';
+            }
+            result += "Trucks:\n";
+            foreach (Truck t in trucks)
+            {
+                result += t.show() + " " + "Parcels: ";
+                result += getParcels(t.getTrunk()) + '\n';
+            }
+            result += "Motos:\n";
+            foreach (Motocycle m in motos)
+            {
+                result += m.show() + " " + "Parcels: ";
+                result += getParcels(m.getTrunk()) + '\n';
+            }
+            return result;
+        }
+        public void clearPark()
+        {
+            foreach (Car c in cars)
+            {
+                c.getCapacity().currentCapacity = 0;
+                c.getTrunk().Clear();
+            }
+            foreach (Truck t in trucks)
+            {
+                t.getCapacity().currentCapacity = 0;
+                t.getTrunk().Clear();
+            }
+            foreach (Motocycle m in motos)
+            {
+                m.getCapacity().currentCapacity = 0;
+                m.getTrunk().Clear();
+            }
+        }
 
         public void setTransport(ILoader transport)
         {
